@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//一、let 
+			//1、变量不能提升
+			console.log(b); //undefined 变量可以提升，但是b没有赋值
+			var b = 2;
+			//console.log(a) //报错、不能变量提升 
+			let a = 1;
+			//2、不能重复声明
+			let x = 1;
+			//var x = 2;
+			//console.log(x)// "x" has already been declared
+
+			//二、const
+			//和let基本相似,其声明的是一个常量,如果const的是一个对象,那么对象里面的属性是可以修改的,
+			//如果是基本数据类型,声明后是不能修改的,
+			const c = 1;
+			//c = 2;//报错、、Assignment to constant variable.
+			const d = {d: "1111"} 
+			console.log(d)//{d:"1111"}
+			d.d = "ddddd";
+			console.log(d) //{d:"ddddd"}
+			
+			
+		</script>
+	</body>
+
+</html>

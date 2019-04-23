@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+//			数据类型区分
+//			基础数据类型: String, Number,boolean,undefined,Null,Symbol(es6)
+//			引用数据类型: Object,Array,function,正则等
+//			区别: 基础数据类型,内存指向栈内存,
+//				  引用数据类型,内存指向堆内存.
+			
+// ES6 Object.assign()浅拷贝
+//数组
+			let arr = [1, 2, 3, 4]
+			let newArr = Object.assign([], arr)
+			newArr[1] = 8
+			console.log(newArr) //1,8,3,4
+			console.log(arr) //1,2,3,4
+			//			浅拷贝是不会改变源数据的 "基本数据类型" 的;
+			//			但会改变 "引用数据类型" 的数据
+			let arr1 = [1, 2, 3, 4, [5, 6],
+				[7, 8]
+			]
+			let newArr1 = Object.assign([], arr1)
+
+			newArr1[4][0] = 0 //1,8,3,4
+
+			console.log(newArr1) //1,2,3,4,[0,6],[7,8]
+
+			console.log(arr1) //1,2,3,4,[0,6],[7,8]
+//对象
+			let a = {
+				x: "xxxxxxx",
+				y: {
+					y: "yyyyyyy"
+				}
+			}
+			let b = Object.assign({}, a)
+			b.c = "cccccc"
+			b.y.b = "bbbbbb"
+//			console.log(b) //{x:"xxxxxxx",y:{y:"yyyyyyy",b:"bbbbbb"},c:"cccccc"}
+//			console.log(a) //{x:"xxxxxxx",y:{y:"yyyyyyy",b:"bbbbbb"}}
+
+//			基本数据类型的赋值，就是「传值」；而引用类型变量赋值，实际上是「传址」。
+//			深拷贝
+			let target = {
+				x: "xxxxxxx",
+				y: {
+					y: "yyyyyyy",
+					l:null
+				},
+				z:null,
+				h:undefined,
+				fn:function(){},
+				s:Symbol,
+			}
+			var dest = JSON.parse(JSON.stringify(target));//有缺陷,当值为undefined、function、symbol 会在转换过程中被忽略
+			dest.y.f = "fffff"
+//			console.log(target)//{x:"xxxxxxx",y:{y:"yyyyyyy"}}
+//			console.log(dest)//{x:"xxxxxxx",y:{y:"yyyyyyy",f:"fffff"}}
+			
+//			更深层次的拷贝
+			function deepCopy(obj) {
+		      var result = Array.isArray(obj) ? [] : {};
+		      for (var key in obj) {
+		        if (obj.hasOwnProperty(key)) {
+		          if (typeof obj[key] === 'object') {
+		            result[key] = deepCopy(obj[key]);   //递归复制
+		          } else {
+		            result[key] = obj[key];
+		          }
+		        }
+		      }
+		      return result;
+		    }
+			let g = deepCopy(target)
+			g.z = "NULL"
+			console.log(target)
+			console.log(g)
+		</script>
+	</body>
+
+</html>
