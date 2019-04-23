@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>创建试卷</title>
+		<link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#form {
+				width: 40%;
+				width: 600px;
+				margin: 10px 40px;
+				float: left;
+			}
+			
+			table {
+				text-align: center;
+				margin-top: 50px!important;
+				width: 50%!important;
+				float: right!important;
+				margin: 50px;
+				box-sizing: border-box;
+			}
+			
+			table span:hover {
+				cursor: pointer;
+			}
+			
+			.ipt {
+				float: right!important;
+				left: -50px!important;
+				padding-left: 0px!important;
+			}
+			
+			.bottom {
+				width: 100%;
+				height: 60px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form role="form" id="form">
+			<div class="form-group">
+				<label>选择类型</label>
+				<select class="form-control" id="select" style="width: 200px;">
+					<option value="danx">单选</option>
+					<option value="duox">多选</option>
+					<option value="wend">问答</option>
+				</select>
+			</div>
+			<div>
+				<div class="form-group">
+					<label for="firstname" class=" control-label">题目:</label>
+					<div class="col-sm-10" class="ipt">
+						<input type="text" class="form-control" id="title" placeholder="请输入题目">
+					</div>
+				</div>
+				<div class="form-group" id="op1">
+					<label for="lastname" class="col-sm-2 control-label">A:</label>
+					<div class="col-sm-10" class="ipt">
+						<input type="text" class="form-control" id="options1">
+					</div>
+				</div>
+				<div class="form-group" id="op2">
+					<label for="lastname" class="col-sm-2 control-label">B:</label>
+					<div class="col-sm-10" class="ipt">
+						<input type="text" class="form-control" id="options2">
+					</div>
+				</div>
+				<div class="form-group" id="op3">
+					<label for="lastname" class="col-sm-2 control-label">C:</label>
+					<div class="col-sm-10" class="ipt">
+						<input type="text" class="form-control" id="options3">
+					</div>
+				</div>
+				<div class="form-group" id="op4">
+					<label for="lastname" class="col-sm-2 control-label">D:</label>
+					<div class="col-sm-10" class="ipt">
+						<input type="text" class="form-control" id="options4">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="lastname" class="col-sm-2 control-label">参考答案:</label>
+					<div class="col-sm-10" class="ipt">
+						<input type="text" class="form-control" id="answer">
+					</div>
+				</div>
+			</div>
+			<div class="bottom">
+				<button class="btn btn-primary" id="add">增加</button>
+				<button class="btn btn-primary" type="submit">提交</button>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<!--<caption>边框表格布局</caption>-->
+			<thead>
+				<tr>
+					<th>题目类型</th>
+					<th>题目</th>
+					<th>选项</th>
+					<th>参考答案</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="test">
+				<tr>
+					<td>Tanmay</td>
+					<td>Tanmay</td>
+					<td>Bangalore</td>
+					<td>560001</td>
+					<td>
+						<button tid='0' class="btn btn-sm btn-primary updata">修改</button>
+						<button tid='0' class="btn btn-sm btn-danger">删除</span>
+					</td>
+				</tr>
+			
+			</tbody>
+		</table>
+
+	</body>
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		let createForm = document.getElementById("form")
+		let oTest = document.getElementById("test")
+		let oSelect = document.getElementById("select")
+		let oTitle = document.getElementById("title")
+		let options1 = document.getElementById("options1")
+		let options2 = document.getElementById("options2")
+		let options3 = document.getElementById("options3")
+		let options4 = document.getElementById("options4")
+		let oAnswer = document.getElementById("answer")
+		let tid = 0
+		// 一切都从此开始
+		init();
+		let testList = []
+		class Danxuan {
+			constructor(oTitle,options1,options2,options3,options4,oAnswer,tid){
+				this.title = oTitle;
+				this.optionA = options1;
+				this.optionB = options2;
+				this.optionC = options3;
+				this.optionD = options4;
+				this.answer = oAnswer
+				this.tid = tid
+			}
+			
+		}
+		/**
+		 * 初始化（启动）
+		 */
+		function init() {
+//			console.log(oSelect.value)
+			// 绑定表单提交事件
+			createForm.addEventListener('submit', (e) => {
+				// 防止默认跳转
+				e.preventDefault();
+			})
+		}
+		$("#add").click(function(){
+			console.log(oSelect.value)
+			tid++
+//			console.log("增加")
+			if(oSelect.value == "danx") {
+//				var factory = userProducer('danx');
+//				var t = factory(oTitle.value,options1.value,options2.value,options3.value,options4.value,oAnswer.value);
+				var t = new Danxuan(oTitle.value,options1.value,options2.value,options3.value,options4.value,oAnswer.value,tid)
+				t.type = "danx",
+				map(t),
+				oTitle.value = "",
+				options1.value = "",
+				options2.value = "",
+				options3.value = "",
+				options4.value = "",
+				oAnswer.value = "",
+				tid = tid
+			}
+			 if(oSelect.value == "duox"){
+//				var factory = userProducer('duox');
+//				var t = factory(oTitle.value,options1.value,options2.value,options3.value,options4.value,oAnswer.value);
+				var t = new Danxuan(oTitle.value,options1.value,options2.value,options3.value,options4.value,oAnswer.value,tid);
+				t.type = "duox",
+				map(t),
+				oTitle.value = "",
+				options1.value = "",
+				options2.value = "",
+				options3.value = "",
+				options4.value = "",
+				oAnswer.value = "",
+				tid = tid
+			}
+			 if(oSelect.value == "wend"){
+//				var factory = userProducer('wend');
+//				var t = factory(oTitle.value,oAnswer.value);
+				var t = new Danxuan(oTitle.value,oAnswer.value,tid);
+				t.type = "wend",
+				map(t),
+				oTitle.value = "",
+				oAnswer.value = "",
+				tid = tid
+			}
+			console.log(t)
+			testList.push(t)
+			console.log(testList)
+			
+		})
+		
+		 function map(item){
+				console.log(item)
+				if(item.type == 'danx'){
+					var str = `<tr>
+					<td>单选</td>
+					<td>${item.title}</td>
+					<td>A:${item.optionA};B:${item.optionB};C:${item.optionC};D:${item.optionD}</td>
+					<td>${item.answer.toUpperCase()}</td>
+					<td>
+						<button tid=${item.tid} class="btn btn-sm btn-primary updata">修改</button>
+						<button tid=${item.tid} class="btn btn-sm btn-danger">删除</span>
+					</td>
+				</tr>`
+				}
+				if(item.type == 'duox'){
+					var str = `<tr>
+					<td>多选</td>
+					<td>${item.title}</td>
+					<td>A:${item.optionA};B:${item.optionB};C:${item.optionC};D:${item.optionD}</td>
+					<td>${item.answer.toUpperCase()}</td>
+					<td>
+						<button tid=${item.tid}  class="btn btn-sm btn-primary">修改</button>
+						<button tid=${item.tid} class="btn btn-sm btn-danger">删除</span>
+					</td>
+				</tr>`
+				}
+				if(item.type == 'wend'){
+					var str = `<tr>
+					<td>问答</td>
+					<td>${item.title}</td>
+					<td></td>
+					<td>${item.optionA}</td>
+					<td>
+						<button  tid=${item.tid} class="btn btn-sm btn-primary">修改</button>
+						<button tid=${item.tid} class="btn btn-sm btn-danger">删除</span>
+					</td>
+				</tr>`
+				}
+				$("#test").append(str)
+			}
+		$("#test").on("click","button",function(event){//事件委托
+			 var target = $(event.target);
+			 let btnName = target[0].innerHTML
+			console.log(target[0].attributes[0].value)
+			console.log(btnName)
+			testList.forEach((item,index,testList)=>{
+				console.log(item)
+				console.log(index)
+//				if(index == delID){
+//					console.log(item)
+//					gu.splice(index,1)
+//				}
+			})
+//			if(btnName == "删除"){
+//				console.log()
+//			}
+		})
+//		$(".updata").click(function(){
+//			console.log($(this).parent())
+//		})
+		function del(){
+			let gu = [
+				{id:0,name:"wff"},
+				{id:1,name:"hfg"},
+				{id:2,name:"jkj"},
+				{id:3,name:"nmn"}
+			]
+			let delID = 2;
+			gu.forEach((item,index,gu)=>{
+				if(index == delID){
+					console.log(item)
+					gu.splice(index,1)
+				}
+			})
+			console.log(gu)
+		}
+//		del()
+		$("#select").on('change', function(e) {
+			if(e.currentTarget.value == "wend"){
+				$("#op1").hide()
+				$("#op2").hide()
+				$("#op3").hide()
+				$("#op4").hide()
+			}else{
+				$("#op1").show()
+				$("#op2").show()
+				$("#op3").show()
+				$("#op4").show()
+			}
+		})
+	</script>
+
+</html>

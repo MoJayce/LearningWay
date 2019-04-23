@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        // function timeout(ms) {
+        //     return new Promise((resolve, reject) => {
+        //         setTimeout(resolve, ms, 'done');
+        //     });
+        // }
+
+        // timeout(3000).then((value) => {
+        //     console.log(value);
+        // });
+
+        // let promise = new Promise(function (resolve, reject) {
+        //     console.log('Promise');//1
+        //     resolve();
+        // });
+        // setTimeout(()=>{console.log("timeout")},100)//4
+        // promise.then(function () {
+        //     console.log('resolved.');//3
+        // });
+
+        // console.log('Hi!');//2
+        // Promise
+        // Hi!
+        // resolved 
+        // timeout
+        // Authorization: 45319a7k39e04bfa57cc31c64e8675h64dac53815cab46e2a9fc8322c1e608bd
+
+
+        // var list = {"a":"12","b":"3"};
+        // function getMsg(url) {
+        //     var list = '';
+        //     $.ajax({
+        //         type: "GET",
+        //         url: url,
+        //         dataType: "json",
+        //         headers: {
+        //             "Authorization": "45319a7k39e04bfa57cc31c64e8675h64dac53815cab46e2a9fc8322c1e608bd"
+        //         },
+        //         success: function (res) {
+        //             // console.log(res)
+
+        //         }
+        //     })
+        //     return list
+        // }
+        (function () {
+            let axios = function (param,type) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: param.url,
+                        type: type,
+                        data: param.data || '',
+                        dataType: "json",
+                        headers: {
+                            "Authorization": "45319a7k39e04bfa57cc31c64e8675h64dac53815cab46e2a9fc8322c1e608bd"
+                        },
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (error) {
+                            reject(error)
+                        }
+                    });
+                });
+            };
+
+            let param = {
+                url: "https://productcenter.haiminggroup.com/api/admin/supplier/Selectsupi?brandId=ott&porder=CreateDate&pageSize=10&page=1"
+            }
+            axios(param,"get").then((res) => {
+                console.log(res)
+            })
+            // let msg = getMsg("https://productcenter.haiminggroup.com/api/admin/supplier/Selectsupi?brandId=ott&porder=CreateDate&pageSize=10&page=1")
+
+            // console.log(list)
+            // console.log(list.a)
+            // 最简单数组去重法
+            /*
+            * 新建一新数组，遍历传入数组，值不在新数组就push进该新数组中
+            * IE8以下不支持数组的indexOf方法
+            * */
+            // function uniq(array) {
+            //     var temp = []; //一个新的临时数组
+            //     for (var i = 0; i < array.length; i++) {
+            //         if (temp.indexOf(array[i]) == -1) {
+            //             temp.push(array[i]);
+            //         }
+            //     }
+            //     return temp;
+            // }
+
+            // var aa = [1, 2, 2, 4, 9,4,3,9,3,2];
+            // console.log(uniq(aa).sort());
+        })()
+
+
+
+    </script>
+</body>
+
+</html>

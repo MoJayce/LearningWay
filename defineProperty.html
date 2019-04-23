@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <label>输入：</label><input type="text" id="demo1"><br />
+    <label>输出：</label> <input type="textarea" id="demo2"></input>
+    <div id="box"></div>
+    <script>
+        var a = {};
+        var output = [];
+        Object.defineProperty(a, 'b', {   //给a对象添加b属性
+            set: function (val) {
+                output['b'] = val;
+            },
+            get: function () {
+                return output['b'];
+            }
+        })
+        var demo1 = document.querySelector('#demo1');
+        var demo2 = document.querySelector('#demo2');
+        var oBox = document.querySelector('#box');
+        demo1.onkeyup = function () {
+            a.b = demo1.value;//给a对象添加b属性时候，触发了a的set方法，此时#demo1的value值赋值给output['b']。
+            demo2.value = output['b'];//取值,执行get方法
+            oBox.innerHTML = output['b']
+        }
+
+
+
+
+
+        // var a = {}
+        // Object.defineProperty(a, "b", {
+        //     set: function (val) {
+        //         console.log("赋值时候调用我,我的新值是" + val)
+        //     },
+        //     get: function () {
+        //         console.log("取值的时候调用我")
+        //         return 123
+        //     }
+        // })
+        // a.b = 520          // 赋值时候调用我,我的新值是520
+        // console.log(a.b)
+    </script>
+</body>
+
+</html>

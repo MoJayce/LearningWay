@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<body>
+</body>
+<script>
+	//最底层流水线
+	function Student() {
+		this.intro = '我是个学生';
+	}
+
+	function Teacher(name,grade) {
+		this.intro = '我是个老师';
+		this.name = name;
+		this.grade = grade;
+		this.teacherGrader = function(){
+			return `${this.name}老师是一位${this.grade}教师`
+		}
+	}
+
+	// 二级流水线
+	/**
+	 * 生产学生
+	 * @param {string} factory
+	 */
+	function studentFactory() {
+		return new Student();
+	}
+
+	/**
+	 * 生产老师
+	 * @param {string} factory
+	 */
+	function teacherFactory(name,grade) {
+		return new Teacher(name,grade);
+	}
+	//生产工厂,最高级流水线
+	/**
+	 * 选择工厂
+	 * @param {string} factory
+	 */
+	//可以筛选多个
+	function userProducer(factory) {
+		// 判断工厂类型
+		switch (factory) {
+			case 'student':
+				return studentFactory;
+				break;
+			case 'teacher':
+				return teacherFactory;
+				break;
+			default:
+				throw '没有这个工厂';
+				break;
+		}
+	}
+
+	var factory = userProducer('teacher'); // 先找到生产老师的工厂, 然后执行生产老师的流水线, factory = new teacherFactory()
+	var t = factory('王花花', '特级'); // 这条流水线去找到上面对应的流水线,加入原料等等  t = new teacherFactory('王花花', '特级') == t = Teacher('王花花', '特级')
+	console.log(t);//未包装的产品
+	console.log(t.teacherGrader());//面向客户的包装好的产品
+</script>
+
+</html>

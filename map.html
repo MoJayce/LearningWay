@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1.Map()对象操作
+        let map = new Map();
+        let b = [
+            {
+                'name': "Tom",
+                'age': "12"
+            },
+            {
+                'name': "Jack",
+                'age': "10"
+            }
+        ];
+        // map.set('a',b[0].name)//a:'123'
+        // map.set('hhh', b)
+        // map.set(b, "hhh")
+        map.set(function () { }, 'hanshu')//map的key可以是任意值,WeakMap的值只能是对象
+        // console.log(map.get('a'))//'123'
+        // console.log(map.get(b))//'hhh'
+        console.log(map.get('hhh'))//'hhh'
+        // console.log(map.has('a'))//true
+        for (let [key, value] of map) {
+            console.log(key)
+            console.log(value)
+        }
+        // map.delete(a)//''
+        // map.clear()//''
+
+
+        // 2.Set()数据操作
+        let set = new Set()
+        let list = set.add(1, 2, 3, 4, 1, 2, 4)
+        console.log(list)
+
+
+
+    </script>
+</body>
+
+</html>

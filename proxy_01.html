@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const DOM = new Proxy({}, {
+            get: function (Target, prop) {
+                    console.log(Target, prop)
+                return function (attr = {}, ...props) {
+                    const el = document.createElement(prop)
+                    for (let key of Object.keys(attr)) {
+                        el.setAttribute(key, attr[key])
+                    }
+                    for (let child of props) {
+                        if (typeof child == 'string') {
+                            child = document.createTextNode(child)
+                        }
+                        el.appendChild(child)
+                    }
+                    return el;
+                }
+            }
+        })
+        let oDiv = DOM.div({ id: "box", class: "div" }, '这里是拦截器创建的元素div', '参数2')
+        console.log(oDiv)
+        document.body.append(oDiv)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+			#box {
+				width: 300px;
+				height: auto;
+				margin: 10px auto;
+			}
+			
+			#box>div {
+				margin: 20px auto;
+			}
+			
+			label {
+				width: 50px;
+				float: left;
+			}
+			
+			input {
+				width: 240px!important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form role="form">
+			<div id="box" class="form-group">
+				<div>
+					<label for="name">姓名:</label>
+					<input type="text" class="form-control" id="name" />
+				</div>
+				<div>
+					<label for="age">年龄:</label>
+					<input type="number" class="form-control" id="age" />
+				</div>
+				<div>
+					<label for="gender">性别:</label>
+					<input type="text" class="form-control" id="gender" />
+				</div>
+				<div class="btn btn-primary" id="btn">确定</div>
+				<div class="btn btn-primary" id="btn2">重置</div>
+			</div>
+		</form>
+		<div id="outbox">
+
+		</div>
+	</body>
+	<!--<script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>-->
+	<script>
+		let oBox = document.getElementById("box")
+		let oName = document.getElementById("name")
+		let oAge = document.getElementById("age")
+		let oGender = document.getElementById("gender")
+		let oBtn = document.getElementById("btn")
+		let oBtn2 = document.getElementById("btn2")
+		let outbox = document.getElementById("outbox")
+		//		创建类
+		class Student {
+			constructor(name, age, gender) {
+				this.name = name;
+				this.age = age;
+				this.gender = gender
+			}
+		}
+//		原型，给student类增加一个方法
+		Student.prototype.outBox = function() {
+			let newDiv = document.createElement("div")
+			newDiv.innerHTML = `<span>姓名:${this.name}</span>;<br/><span>年龄:${this.age}</span>;<br/><span>性别:${this.gender}</span><hr/>`
+			outbox.appendChild(newDiv)
+		}
+		oBtn2.onclick = function() {
+			oName.value = ""
+			oAge.value = ""
+			oGender.value = ""
+		}
+		oBtn.onclick = function() {
+			let Name = oName.value
+			let Age = oAge.value
+			let Gender = oGender.value
+			if(Name !== "" && Age !== "" && Gender !== "") {
+				let whh = new Student(Name, Age, Gender)
+				whh.outBox()
+			} else {
+				alert("请检查输入")
+			}
+		}
+	</script>
+
+</html>

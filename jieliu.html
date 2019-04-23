@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style>
+		html,
+		body {
+			width: 100%;
+			height: auto;
+			background: #efefef;
+		}
+	</style>
+
+	<body>
+		<div id="box">
+			<button id="btn">点击</button>
+		</div>
+		<!--<div class="box" style="width: 100%;height: 300px;background: red;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: blue;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: yellow;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: purple;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: orange;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: aqua;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: green;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: black;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: z;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: aqua;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: red;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: blue;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: yellow;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: purple;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: orange;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: aqua;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: green;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: black;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: z;"></div>
+		<div class="box" style="width: 100%;height: 300px;background: aqua;"></div>-->
+	</body>
+	<script>
+		window.onload = function() {
+			// 函数节流
+//			var canRun = true;
+//			document.body.onscroll = function() {
+//				console.log("没有加节流") //滚动触发N次
+//				if(!canRun) {
+//					// 判断是否已空闲，如果在执行中，则直接return
+//					return;
+//				}
+//				canRun = false;
+//				setTimeout(function() {
+//					console.log("函数节流"); // 一定时间内js方法只跑一次 。在一定时间内触发一次,此时再去发送ajax请求，更合理
+//					canRun = true;
+//				}, 500);
+//			};
+			// 函数防抖
+//			var timer = false;
+//			document.body.onscroll = function() {
+//				console.log("没有防抖") //只要在滚动就触发此事件
+//				clearTimeout(timer); // 清除未执行的代码，重置回初始化状态
+//
+//				timer = setTimeout(function() {
+//					console.log("函数防抖"); //是指频繁触发的情况下，只有足够的空闲时间，才执行代码一次。
+//					//当滚动事件未结束时并不触发事件，只有当滚动事件停止了，然后将时间重置，再去执行该执行的代码
+//				}, 300);
+//			};
+			let btn = document.createElement("button")
+			btn.innerHTML = "点击我"
+//			setTimeout(()=>{
+//				document.getElementById("box").appendChild(btn)
+//			},1000)
+			let Timer = false
+			document.getElementById("box").addEventListener("click",()=>{
+				console.log("没有防抖的事件")
+				clearTimeout(Timer)
+				Timer = setTimeout(()=>{
+					console.log("函数防抖")
+				},300)
+			})
+		}
+	</script>
+
+</html>

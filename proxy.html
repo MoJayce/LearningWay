@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // var proxy = new Proxy({}, {
+        //     get: function (target, property) {
+        //         return 35;
+        //     },
+        //     set:function(target, property){
+        //         return "aaaa"
+        //     }
+        // });
+        // console.log(proxy)
+        // console.log(proxy.time) // 35
+        // console.log(proxy.name )// 35
+        // console.log(proxy.title) // 35
+
+        // var target = {};
+        // var handler = {};
+        // var proxy = new Proxy(target, handler);
+        // proxy.a = 'b';
+        // console.log(target.a )// "b"
+
+        // Proxy方法
+        let user = new Proxy({}, {
+            get: function (obj, props) {
+                switch (props) {
+                    case "call":
+                        return `我是${obj.name},今年${obj.age}岁！！！`
+                }
+            },
+            set(obj, props, value) {
+                if (props == 'age') {
+                    if (value > 40) {
+                        throw `太老了！！！`
+                    }
+                }
+                obj[props] = value;
+            }
+        })
+        user.name = "Ada";
+        user.age = 25;
+        console.log(user.call)
+        // console.log(user.calls)
+
+        let validator = {
+            get(obj, prop) {
+                return `输入的年龄是${obj.age}`
+            },
+            set(obj, prop, value) {
+                if (prop === 'age') {
+                    if (!Number.isInteger(value)) {
+                        throw new TypeError('年龄请输入数字');
+                    }
+                    if (value > 200) {
+                        throw new RangeError('年龄不符合');
+                    }
+                }
+
+                // 对于满足条件的 age 属性以及其他属性，直接保存
+                obj[prop] = value;
+            }
+        }
+        let person = new Proxy({}, validator);
+
+        person.age = 100;
+
+        person.age // 100
+        // person.age = 'young' // 报错
+        person.age = 30 // 报错
+        console.log(person.age)
+
+
+        // apply
+        var target = function () { return 'I am the target'; };
+        var handler = {};
+        //     apply: function () {
+        //         return 'I am the proxy';
+        //     }
+        // };
+
+        var p = new Proxy(target, handler);
+
+        console.log(p()) //如果用了apply结果是'I am the proxy'
+
+        // 普通es6方法
+        class UserA {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            getName() {
+                return `我是${this.name},今年${this.age}岁！！！`
+            }
+        }
+        let p1 = new UserA("Leon", 28)
+        // console.log(p1)//object  UserA {name: "Leon", age: 28}
+        console.log(p1.getName())//我是Leon,今年28岁！！！
+
+
+        // es5方法
+        let UserB = function (name, age) {
+            this.name = name;
+            this.age = age;
+            this.getName = function () {
+                return `我是${this.name},今年${this.age}岁！！！`
+            }
+        }
+        let p2 = new UserB("wesk", 30)
+        console.log(p2.getName())
+    </script>
+</body>
+
+</html>

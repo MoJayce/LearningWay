@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let a = {};
+        Object.defineProperty(a,"name",{
+            
+            set:function(value){
+                value:"Tom"
+            },
+            get:function(){
+                return value
+            },
+           
+            
+        //     value:"Tom",
+            // writable:true,//可重写
+        //     enumerable:true, //可枚举
+        });
+        console.log(a)
+        // a.name = "Alice";
+        // let arr = [];
+        // arr.push(a)
+        // console.log(arr)
+        // arr.map(item =>{
+        //     console.log(item.name)
+        //     let obj = {}
+        //     obj.hahah = item.name
+        //     return obj
+        // })
+        // console.log(arr)
+s
+
+        // let obj = {name:"Tom",age:"10"}
+        // Object.defineProperty(obj,"age",{
+        //     writable:false,
+        // })
+        // obj.age = 12;
+        // console.log(obj)
+
+        
+
+    </script>
+</body>
+</html>
