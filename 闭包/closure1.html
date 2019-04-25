@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	</head>
+
+	<body>
+		<script>
+			function f1(a) {
+
+				var n = a;
+
+				nAdd = function() {
+					n += 1
+					console.log(n)
+				} //只是申明，并没有调用并不会生效
+
+				function f2() {
+					console.log(n+2);
+				}
+
+				return f2;
+			}
+			
+			var result = f1(12);
+
+			result(); // 13		//12+1
+
+			nAdd(); //匿名函数本身也是一个闭包 //13   12+1
+
+			result(); // 14    //12+1+1
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	</head>
+
+	<body>
+		<script>
+//			var a = new Number(4); //object
+//				a.b = 10
+			function a(x){
+				this.x = x
+			}
+			function b(x) {
+//				a.call(this,x)
+//				console.log(a.b);//需要从a继承两种方式,1用prototype,2用call改变this指向
+			}
+			
+			b.prototype = new a()//a()的x未传实参所以x是undefined,b继承于a,所以b的x也是undefined
+//			a.prototype.x = b.prototype.x
+			var c = new b(12)
+			console.log(c.x)//undefined	
+		</script>
+	</body>
+
+</html>

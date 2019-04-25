@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function outerFun() {
+        var a = 0;
+         function innerFun() {
+            a++;
+            console.log(a);
+        }
+        return innerFun;  //注意这里
+    }
+
+    outerFun()(); // 结果为1 此处并非闭包，只是普通的匿名函数调用(自执行)
+    outerFun()(); // 结果为1
+    console.log(typeof outerFun());//function
+
+    var obj = new outerFun();
+    console.log(typeof obj); //function
+    obj();  //结果为1
+    obj();  //结果为2
+</script>
+</body>
+</html>

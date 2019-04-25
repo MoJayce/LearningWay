@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="box" onclick="result()">调用F1</div>
+<div class="box1" onclick="a()">检测f1</div>
+<script>
+    //     在下面的代码中，函数f2就被包括在函数f1内部，这时f1内部的所有局部变量，
+    // 对f2都是可见的。但是反过来就不行，f2内部的局部变量，对f1 就是不可见的。
+    // 这就是Javascript语言特有的“链式作用域”结构（chain scope），
+    //
+    // 子对象会一级一级地向上寻找所有父对象的变量。所以，父对象的所有变量，对子对象都是可见的，
+    // 反之则不成立。
+    //
+    // 既然f2可以读取f1中的局部变量，那么只要把f2作为返回值，我们不就可以在f1外部读取它的内部变量了吗！
+    //
+    //
+    // Js代码
+
+        function f1() {
+
+            n = 999;
+			
+            function f2() {
+                console.log(n);
+            }
+
+//          return f2;
+        }
+        var result =  f1();
+		console.log(n)
+        // result(); // 999
+var a = function () {
+    console.log(n)
+}
+
+
+
+</script>
+
+
+</body>
+</html>
