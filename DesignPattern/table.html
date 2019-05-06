@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<style type="text/css">
+			.colorlist {
+				width: 100%;
+				height: 50px;
+				background: #e8e8e8;
+				position: absolute;
+				bottom: 0;
+				line-height: 30px;
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: flex-start;
+				align-items: center;
+			}
+			
+			.colorlist>div {
+				width: 70px;
+				/*height: 30px;*/
+				font-size: 12px;
+				padding: 0 10px;
+				background: #fff;
+				margin: 0 10px;
+				position: relative;
+				border-radius: 5px;
+			}
+			
+			.colorlist>div:hover i {
+				display: block;
+			}
+			
+			.colorlist>div>i:hover {
+				background: #000;
+				color: #fff;
+			}
+			
+			.colorlist>div>i {
+				width: 15px;
+				height: 15px;
+				text-align: center;
+				line-height: 15px;
+				background: #ccc;
+				border-radius: 50%;
+				color: #fff;
+				position: absolute;
+				top: -5px;
+				right: -5px;
+				cursor: pointer;
+				display: none;
+			}
+			.list ul li{
+				list-style-type: none;
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: flex-start;
+				align-items: center;
+				border-bottom: 1px solid;
+				min-height: 40px;
+			}
+			.listtab ul{
+				list-style-type: none;
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: space-around;
+				align-items: center;
+			}
+			.list li>div:nth-of-type(1){
+				width: 10%;
+				height: 100%;
+			}
+			.list li>div:nth-of-type(2){
+				width: 90%;
+			}
+			.list li>div:nth-of-type(2)>div{
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				border-right: 1px solid;
+			}
+			.list li>div:nth-of-type(2)>div>div{
+				width: 10%;
+				border-left: 1px solid;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="property">
+				<div style="width: 100%;height: 110px;position: relative;">
+					<el-select style="position: absolute;left: 0px" @change="GetColor" v-model="colorVal" placeholder="请选择颜色">
+						<el-option v-for="item in Colors" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+					<div class="colorlist">
+						<div v-for="(value,index) in colorList" :key="index">{{value}}<i @click="delColor(value)" class="el-icon-close"></i></div>
+					</div>
+				</div>
+				<div style="width: 100%;height: 100px;position: relative;margin:20px 0">
+					<el-select style="position: absolute;left: 0px" :disabled="choseSize" @change="GetSize" v-model="SizeVal" placeholder="请选择尺码">
+						<el-option v-for="item in Sizes" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+					<div class="colorlist">
+						<div v-for="(value,index) in sizeList" :key="index">{{value}}<i @click="delSize(value)" class="el-icon-close"></i></div>
+					</div>
+				</div>
+				<div class="listtab">
+					<ul>
+						<li>颜色</li>
+						<li>尺码</li>
+						<li>款号</li>
+						<li>价格</li>
+						<li>原价</li>
+						<li>库存</li>
+						<li>使用积分</li>
+						<li>描述</li>
+						<li>重量</li>
+						<li>是否显示</li>
+					</ul>
+				</div>
+				<div class="list">
+					<ul>
+						<li v-for="(item,index) in tableList" :key>
+							<div>{{item.color}}</div>
+							<div>
+								<div style="display: flex;flex-flow: row nowrap;justify-content: space-around;" v-for='(items,indexs) in item.sizelist' :style="indexs == item.sizelist.length-1?'boder-bottom:none':'border-bottom:1px solid'":key='indexs'>
+									<div>{{items.size}}</div>
+									<div><el-input v-model='items.code'></el-input></div>
+									<div><el-input v-model='items.price'></el-input></div>
+									<div><el-input v-model='items.oldPrice'></el-input></div>
+									<div><el-input v-model='items.stock'></el-input></div>
+									<div><el-input v-model='items.code'></el-input></div>
+									<div><el-input v-model='items.integral'></el-input></div>
+									<div>{{items.dsp}}</div>
+									<div><el-input v-model='items.weight'></el-input></div>
+									<div>{{items.IsShow}}</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- import Vue before Element -->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<!-- import JavaScript -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<script>
+			new Vue({
+				el: '#app',
+				data: {
+					choseSize:true,
+					colorVal: "",
+					SizeVal: "",
+					colorList: [],
+					sizeList: [],
+					tableData: [],
+					Colors: [{
+						value: '藏蓝',
+						label: '藏蓝'
+					}, {
+						value: '纯色本白',
+						label: '纯色本白'
+					}, {
+						value: '纯色本色',
+						label: '纯色本色'
+					}, {
+						value: '纯色黑灰',
+						label: '纯色黑灰'
+					}, {
+						value: '纯色粉灰',
+						label: '纯色粉灰'
+					}],
+					Sizes: [{
+						value: 'S',
+						label: 'S'
+					}, {
+						value: 'M',
+						label: 'M'
+					}, {
+						value: 'L',
+						label: 'L'
+					}, {
+						value: 'XL',
+						label: 'XL'
+					}, {
+						value: 'XXL',
+						label: 'XXL'
+					}],
+					value: '',
+					tableList: [],
+					nn:[
+					{
+							color: "藏蓝",
+							sizelist: [{
+									size: "S",
+									code: "10001",
+									price: "200",
+									oldPrice: "200",
+									stock: "50",
+									integral: "50",
+									weight: "50",
+									dsp: "aaa",
+									IsShow: true,
+								},
+								{
+									size: "M",
+									code: "10002",
+									price: "200",
+									oldPrice: "200",
+									stock: "10"
+								},
+								{
+									size: "L",
+									code: "10003",
+									price: "200",
+									oldPrice: "200",
+									stock: "200"
+								}
+							]
+						},
+						{
+							color: "纯色本色",
+							sizelist: [{
+									size: "S",
+									code: "20001",
+									price: "345",
+									oldPrice: "400",
+									stock: "10"
+								},
+								{
+									size: "M",
+									code: "20002",
+									price: "345",
+									oldPrice: "400",
+									stock: "10"
+								},
+								{
+									size: "L",
+									code: "20003",
+									price: "345",
+									oldPrice: "400",
+									stock: "10"
+								}
+							]
+						}]
+				},
+				methods: {
+					delColor(val) {
+						console.log(val)
+						for(let i of this.colorList){
+							if(val == i){
+								var index = this.colorList.indexOf(i);
+								if (index > -1) {
+							    	this.colorList.splice(index, 1);
+								}
+							}
+						}
+						for(let i of this.tableList){
+							console.log(i)
+							if(val == i.color){
+								var index = this.tableList.indexOf(i);
+								console.log(index)
+								if (index > -1) {
+							    	this.tableList.splice(index, 1);
+								}
+							}
+						}
+						this.colorVal = ''
+					},
+					delSize(val) {
+						console.log(val)
+						console.log(this.sizeList)
+						for(let i of this.sizeList){
+							if(val == i){
+								var index = this.sizeList.indexOf(i);
+								if (index > -1) {
+							    	this.sizeList.splice(index, 1);
+								}
+							}
+						}
+						for(let i of this.tableList[0].sizelist){
+							console.log(i)
+							if(val == i.size){
+								var index = this.tableList[0].sizelist.indexOf(i);
+								console.log(index)
+								if (index > -1) {
+							    	this.tableList[0].sizelist.splice(index, 1);
+								}
+							}
+						}
+						this.SizeVal = ''
+					},
+					//      选择颜色
+					GetColor(val) {
+						console.log(val)
+						this.colorList.push(val)
+						this.choseSize = false
+						if(this.colorList.length > 1){
+							console.log("追加")
+							let oldlist = JSON.stringify(this.tableList)
+							let newlist = JSON.parse(oldlist)
+							console.log(newlist[0].sizelist.size)
+							let newobj = {
+								color:val,
+								sizelist:[
+									{size: ""},
+									{code: ""},
+									{price: ""},
+									{oldPrice: ""},
+									{stock: ""},
+									{integral: ""},
+									{weight: ""},
+									{dsp: newlist.color+newlist[0].size},
+									{IsShow: true},
+								]
+							}
+							console.log(newobj)
+							this.tableList.push(newobj)
+//						this.tableList.push({
+//							color: val,
+//							sizelist: this.tableList[0].sizelist
+//						})
+						}else{
+							console.log("新增")
+						this.tableList.push({
+							color: val,
+							sizelist: [
+							]
+						})
+						}
+
+					},
+					//      选择尺码
+					GetSize(val) {
+						console.log(val)
+						this.sizeList.push(val)
+						this.tableList[0].sizelist.push({
+									size: val,
+									code: "",
+									price: "",
+									oldPrice: "",
+									stock: "",
+									integral: "50",
+									weight: "50",
+									dsp: this.tableList[0].color+val,
+									IsShow: true,
+							})
+					}
+				}
+			})
+		</script>
+
+</html>

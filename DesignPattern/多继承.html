@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script type="text/javascript">
+		//		function extend(target, source) {
+		//			for(let property in source) {
+		//				target[property] = source[property]
+		//			}
+		//			return target
+		//		}
+		//		let book = {
+		//			name: "JS设计模式",
+		//			alike: ['1', '2', '3']
+		//		}
+		//		let anBook = {
+		//			color: "blue"
+		//		}
+		//		//		extend(anBook,book)//浅复制的过程
+		//
+		//		//		console.log(book)
+		//		//		console.log(anBook)
+		//		let nBook = Object.assign({}, book)
+		//		nBook.color = "red";
+		//		console.log(book)
+		//		console.log(nBook)
+		////		那么多继承就是个深拷贝的过程?
+		//		function mix() {
+		//			let i = 1;
+		//			len = arguments.length;
+		//			target = arguments[0],
+		//				for(; i < len; i++) {
+		//					arg = arguments[i]
+		//					for(let property in arg) {
+		//						target[property] = arg[property]
+		//					}
+		//				}
+		//			return target
+		//		}
+		function Parent1(name, age) {
+			this.name = name;
+			this.age = age;
+			this.height = 180;
+		}
+		Parent1.prototype.say = function() {
+			alert('hi...');
+		}
+
+		function Parent2(name, age, weight) {
+			this.name = name;
+			this.age = age;
+			this.weight = weight;
+			this.height = 170;
+			this.skin = 'yellow';
+		}
+		Parent2.prototype.walk = function() {
+			alert('walk...');
+		}
+
+//		function Child(name, age, weight) {
+//			Parent1.call(this, name, age);
+//			Parent2.call(this, name, age, weight);
+//		}
+
+//		for(var i in Parent1.prototype) {
+//			Child.prototype[i] = Parent1.prototype[i]
+//		}
+//		for(var i in Parent2.prototype) {
+//			Child.prototype[i] = Parent2.prototype[i]
+//		}
+		function Child(name,age,weight){
+		    Parent1.call(this,name,age);
+		    Parent2.call(this,name,age,weight);
+		}
+		function Empty1(){}
+		Empty1.prototype = Parent1.prototype;//将Parent1的prototype赋给Empty1的prototype
+		Child.prototype = new Empty1(); //将Empty1的实例赋给Child的prototype
+		
+		//同样对于Parent2也使用这种方法时
+		function Empty2(){}
+		Empty2.prototype = Parent2.prototype;
+		Child.prototype = new Empty2(); //这里Child的prototype已经有了Parent1的共有方法，这里将Parent2的方法赋过来，是覆盖
+		Child.prototype.constructor = Child;
+		
+//		var c1 = new Child('xiaoming',10,8);
+
+		var c1 = new Child('xiaoming',10,8);
+		console.log(c1)
+	</script>
+
+</html>

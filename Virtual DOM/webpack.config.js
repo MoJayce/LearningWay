@@ -34,11 +34,11 @@ module.exports = {
     new webpack.DefinePlugin({
       'SERVICE_URL': JSON.stringify('https://www.baidu.com')
     }),
-    new HtmlWebpackPlugin({
-      title: 'newIndex',
-      filename: 'index.html',
-      template: "index.html"
-    }),
+    // new HtmlWebpackPlugin({
+    //   title: 'newIndex',
+    //   filename: 'index.html',
+    //   template: "index.html"
+    // }),
   ],
   module: {
     rules: [
@@ -60,7 +60,9 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-react-jsx']
+            plugins: ["@babel/plugin-transform-react-jsx", {
+              "pragma": "dom", // default pragma is React.createElement
+            }]
           }
         }
       },
